@@ -8,6 +8,7 @@ public class Driver {
 
     public Driver(){
         this.setBlackListedCustomer(new HashSet<String>());
+        this.setStatus(true);
     }
 
     public double getRatings() {
@@ -35,6 +36,16 @@ public class Driver {
     public void setName(String name) {
         this.name = name;
     }
+
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
+
+    public boolean status;
 
     String name;
     double ratings;

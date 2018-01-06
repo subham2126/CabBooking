@@ -47,6 +47,11 @@ public class Main {
 
         }
 
+    public static void toogleDriverStatus(String driverName){
+
+        drivers.get(driverName).setStatus(!drivers.get(driverName).isStatus());
+    }
+
 
 
 
@@ -62,6 +67,8 @@ public class Main {
             for(String key : drivers.keySet()){
 
                 Driver driver = drivers.get(key);
+                if(driver.isStatus()==false)
+                    continue;
                 if(driver.getAverageRating()>= c.getAverageRating() && (c.getBlackListDrivers().contains(driver.getName()) == false) && (driver.getBlackListedCustomer().contains
                         (c.getName())==false))
                     list.add(driver);
@@ -70,8 +77,10 @@ public class Main {
 
             if(list.size() == 0){
                 HashSet<String> set = c.getDriverList();
-                for(String driver :  set)
+                for(String driver :  set) {
+                    if(drivers.get(driver).isStatus())
                     list.add(drivers.get(driver));
+                }
             }
 
             return list;
@@ -88,23 +97,27 @@ public class Main {
 
     public static void main(String[] args) {
 
-        addTrip("d1",4,"c1",5);
+        addTrip("d1",4,"c1",2);
         addTrip("d1", 5,"c2",4);
-        addTrip("d1",1,"c3",2);
-        addTrip("d2",5,"c1",1);
+        addTrip("d1",5,"c3",2);
+        addTrip("d2",5,"c1",5);
         addTrip("d2",5,"c2",5);
-        addTrip("d2",4,"c3",5);
-        addTrip("d3",3,"c1",2);
-        addTrip("d3",4,"c2",5);
-        addTrip("d3",3,"c3",3);
-        addTrip("d4",1,"c2",5);
+        addTrip("d2",5,"c3",5);
+        addTrip("d3",5,"c1",2);
+        addTrip("d3",5,"c2",5);
+        addTrip("d3",5,"c3",3);
+        addTrip("d4",5,"c2",5);
         addTrip("d4",2,"c4",5);
+
+        toogleDriverStatus("d1");
+        toogleDriverStatus("d2");
 
         System.out.println(getAverageRatingOfCustomer("c1"));
         System.out.println(getAverageRatingOfCustomer("c2"));
         System.out.println(getAverageRatingOfCustomer("c3"));
         System.out.println(getAverageRatingOfCustomer("c4"));
-        List<Driver> driverss = getEligibleCabs("c4");
+
+        List<Driver> driverss = getEligibleCabs("c1");
         for(int i=0;i<driverss.size();i++)
             System.out.println(driverss.get(i).getName()  );
 
